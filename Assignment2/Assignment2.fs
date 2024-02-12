@@ -30,19 +30,34 @@ module Assignment2
 
     // Exercise 2.4 - The set of complex numbers is the set of pairs of real numbers.
     // Define a type 'complex' that represents complex numbers with floating point components.
-    type complex = float * float
+    type complex = {real : float; imaginary : float}
     
     //Define a function mkComplex : float -> float -> complex that given two floating point numbers return the corresponding complex number.
     let mkComplex (a:float) (b:float) : complex =
-        (a, b)
+        {
+        real = a
+        imaginary = b
+        }
     
     //Define a function complexToPair : complex -> float * float that given a complex number (a,b) returns the pair (a, b).
-    let complexToPair ((a,b) : complex) : float * float =
-        (a,b)
+    let complexToPair (complexNumber : complex) : float * float =
+        (complexNumber.real, complexNumber.imaginary)
         
+    // Declare an infix function |+| of type complex -> complex -> complex for addition of complex numbers
+    let (|+|) (fst : complex) (snd : complex) : complex =
+        {
+            real = fst.real + snd.real
+            imaginary = fst.imaginary + snd.imaginary
+        }
     
-    let (|+|) _ = failwith "not implemented"
-    let (|*|) _ = failwith "not implemented"
+    // Declare an infix function |*| of type complex -> complex -> complex for multiplication of complex numbers
+    let (|*|) (fst : complex) (snd : complex) : complex =
+        {
+            real = (fst.real * snd.real) - (fst.imaginary * snd.imaginary)
+            imaginary = (fst.imaginary * snd.real) + (fst.real * snd.imaginary)
+        }
+    
+    
     let (|-|) _ = failwith "not implemented"
     let (|/|) _ = failwith "not implemented"
 
