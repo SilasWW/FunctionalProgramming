@@ -74,18 +74,41 @@ module Assignment2
             imaginary = -snd.imaginary / denominator
         }
 
-    let explode1 _ = failwith "not implemented"
+    // Exercise 2.5 - Write a non-recursive function explode1 : string -> char list that given a string s returns the
+    // list of characters in s
+    let explode1 (s : string) : char list =
+        List.ofArray(s.ToCharArray())
+        
+    // Write a recursive function explode2 : string -> char list that behaves the same as explode1
+    let rec explode2 (s : string) : char list =
+        match s with
+            | "" -> []
+            | _ -> s.[0] :: explode2 (s.Remove(0, 1))
 
-    let rec explode2 _ = failwith "not implemented"
+    // Exercise 2.6 - Write a function implode : char list -> string that given a list of characters cs returns a string
+    // with all characters of cs in the same order.
+    let implode (cs : char list) : string =
+        List.foldBack (fun current acc -> (string current + acc)) cs ""
+ 
+    //Write a function implodeRev : char list -> string that given a list of characters cs returns a string with all characters of
+    //cs in reverse order. You may not use List.rev for this exercise.
+    let implodeRev (cs : char list) : string =
+        List.fold (fun acc current -> string current + acc) "" cs
 
-    let implode _ = failwith "not implemented"
-    let implodeRev _ = failwith "not implemented"
+    //Exercise 2.7 - Write a function toUpper : string -> string that given a string s returns s with all characters in upper case.
+    let toUpper (s : string) : string =
+        s |> explode1 |> List.map System.Char.ToUpper |> implode
 
-    let toUpper _ = failwith "not implemented"
-
-    let ack _ = failwith "not implemented"
-
-
+    // Exercise 2.8 - The Ackermann function is a recursive function where both value and number of mutually recursive calls grow rapidly.
+    // Write the function ack : int * int -> int that given an integer pair (m, n) implements the Ackermann function
+    let rec ack (m, n) =
+        if m < 0 || n < 0 then
+            failwith "The function is not defined for negative arguments"
+        else
+            match (m, n) with
+            | (0, n) -> n + 1
+            | (m, 0) -> ack (m - 1, 1)
+            | (m, n) -> ack (m - 1, ack (m, n - 1))
 
     let downto3 _ = failwith "not implemented"
 
