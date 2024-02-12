@@ -57,9 +57,22 @@ module Assignment2
             imaginary = (fst.imaginary * snd.real) + (fst.real * snd.imaginary)
         }
     
-    
-    let (|-|) _ = failwith "not implemented"
-    let (|/|) _ = failwith "not implemented"
+    // Declare an infix function |-| of type complex -> complex -> complex for subtraction of complex numbers.
+    let (|-|) (fst : complex) (snd : complex) : complex =
+        fst |+| {
+            real = -snd.real
+            imaginary = -snd.imaginary
+        }
+        
+    // Declare an infix function |/| of type complex -> complex -> complex for subtraction of complex numbers.
+    let (|/|) (fst : complex) (snd : complex) : complex =
+        let denominator = snd.real ** 2 + snd.imaginary ** 2
+        if denominator = 0.0 then failwith "Denominator is 0.0, and cant be divided by"
+        else
+            fst |*| {
+            real = snd.real / denominator
+            imaginary = -snd.imaginary / denominator
+        }
 
     let explode1 _ = failwith "not implemented"
 
